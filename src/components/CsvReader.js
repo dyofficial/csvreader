@@ -25,18 +25,18 @@ const CsvReader = () => {
   });
 
   const processCSV = (str, delim = ",") => {
-    console.log("str:::", str);
+    // console.log("str:::", str);
     const headers = str
       .slice(0, str.indexOf("\n"))
       .split(delim)
       .sort(compareFn);
     setHeaders(headers);
     const rows = str.slice(str.indexOf("\n") + 1).split("\n");
-    console.log("rows", rows);
+    // console.log("rows", rows);
 
     const newArray = rows.map((row, id) => {
       const values = row.split(delim);
-      console.log("values", values);
+      // console.log("values", values);
 
       const eachObject = headers.reduce((obj, header, index) => {
         obj[header] = values[index];
@@ -47,7 +47,7 @@ const CsvReader = () => {
       return eachObject;
     });
 
-    console.log("newArray", newArray);
+    // console.log("newArray", newArray);
 
     setCsvArray(newArray);
   };
@@ -64,9 +64,9 @@ const CsvReader = () => {
     setCsvStr(csvStr_);
   }, [csvArray, headers]);
 
-  console.log("headers", headers);
-  console.log("csvStr", csvStr);
-  console.log("csvArray", csvArray);
+  // console.log("headers", headers);
+  // console.log("csvStr", csvStr);
+  // console.log("csvArray", csvArray);
 
   const submit = () => {
     const file = csvFile;
@@ -78,7 +78,7 @@ const CsvReader = () => {
     const reader = new FileReader();
     reader.onload = function (e) {
       const text = e.target.result;
-      console.log("text", text);
+      // console.log("text", text);
       processCSV(text);
     };
     reader.readAsText(file);
@@ -88,7 +88,7 @@ const CsvReader = () => {
     // e.preventDefault();
     setEdit(true);
     let editableField = csvArray.find((item) => item.id == id);
-    console.log(editableField);
+    // console.log(editableField);
     setEditField(editableField);
 
     // console.log(e);
@@ -101,13 +101,13 @@ const CsvReader = () => {
     setCsvArray([...filteredArray]);
   };
   const handleSubmit = () => {
-    console.log(editField);
+    // console.log(editField);
 
     const newcsvarray = csvArray.map((item, index) =>
       item.id === editField.id ? editField : item
     );
 
-    console.log(newcsvarray);
+    // console.log(newcsvarray);
 
     setCsvArray(newcsvarray);
   };
@@ -202,9 +202,11 @@ const CsvReader = () => {
           <>
             <table>
               <thead>
-                {headers.map((item) => (
-                  <th>{item}</th>
-                ))}
+                <tr>
+                  {headers.map((item, i) => (
+                    <th key={i}>{item}</th>
+                  ))}
+                </tr>
               </thead>
               <tbody>
                 {csvArray.map((item, i) => (
