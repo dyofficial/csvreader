@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
+import { BsPencilSquare } from "react-icons/bs";
 import "../style.css";
 
 const CsvReader = () => {
@@ -63,6 +65,7 @@ const CsvReader = () => {
     );
 
     setCsvArray(newcsvarray);
+    setEdit(false);
   };
 
   const handleEditField = (e) => {
@@ -70,9 +73,10 @@ const CsvReader = () => {
   };
 
   return (
-    <div>
+    <div className="content">
+      <h3>Crud App</h3>
       {edit ? (
-        <div>
+        <div className="edit">
           <input
             type="text"
             placeholder="First Name"
@@ -101,14 +105,13 @@ const CsvReader = () => {
             value={editField.sex}
             name="sex"
           />
-          <button type="button" onClick={handleSubmit}>
+          <button type="button" onClick={handleSubmit} className="edit-submit">
             submit
           </button>
         </div>
       ) : null}
 
       <form id="csv-form">
-        <h3>Crud App</h3>
         <input
           type="file"
           accept=".csv"
@@ -148,26 +151,19 @@ const CsvReader = () => {
                     <td>{item.lastName}</td>
                     <td>{item.age}</td>
                     <td>{item.sex}</td>
-
                     {item.firstName === undefined ? null : (
-                      <>
-                        <td>
-                          <button
-                            type="button"
-                            onClick={() => handleDelete(item.id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            type="button"
-                            onClick={(e) => handleEdit(item.id)}
-                          >
-                            Edit
-                          </button>
-                        </td>
-                      </>
+                      <td>
+                        <FiTrash2
+                          onClick={() => handleDelete(item.id)}
+                          style={{ cursor: "pointer", marginRight: "10px" }}
+                          color="red"
+                        />
+                        <BsPencilSquare
+                          onClick={(e) => handleEdit(item.id)}
+                          style={{ cursor: "pointer" }}
+                          color="green"
+                        />
+                      </td>
                     )}
                   </tr>
                 ))}
