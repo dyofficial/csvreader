@@ -15,6 +15,7 @@ const CsvReader = () => {
   const [csvStr, setCsvStr] = useState("");
   const [headers, setHeaders] = useState([]);
   const [fileToExport, setFileToExport] = useState();
+  const [errorMsg, setErrorMsg] = useState("");
 
   const [editField, setEditField] = useState({
     firstName: "",
@@ -69,6 +70,11 @@ const CsvReader = () => {
 
   const submit = () => {
     const file = csvFile;
+
+    file === undefined
+      ? setErrorMsg("Please import a file")
+      : setErrorMsg(null);
+
     const reader = new FileReader();
     reader.onload = function (e) {
       const text = e.target.result;
@@ -176,11 +182,12 @@ const CsvReader = () => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            if (csvFile) submit();
+            submit();
           }}
         >
           submit
         </button>
+        {errorMsg}
 
         {/* <button
           onClick={(e) => {
