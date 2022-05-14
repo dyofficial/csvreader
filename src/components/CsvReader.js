@@ -92,7 +92,7 @@ const CsvReader = () => {
             name="lastName"
           />
           <input
-            type="number"
+            type="text"
             placeholder="Age"
             onChange={handleEditField}
             value={editField.age}
